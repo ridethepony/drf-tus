@@ -6,6 +6,7 @@ import os
 import tempfile
 import uuid
 
+import errno
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -14,7 +15,18 @@ from jsonfield import JSONField
 
 from rest_framework_tus import signals
 from rest_framework_tus import states
+from rest_framework_tus import settings
 from rest_framework_tus.utils import write_bytes_to_file
+
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
 
 
 class AbstractUpload(models.Model):
@@ -67,7 +79,8 @@ class AbstractUpload(models.Model):
 
     def get_or_create_temporary_file(self):
         if not self.temporary_file_path:
-            fd, path = tempfile.mkstemp(prefix="tus-upload-")
+            mkdir_p(settings.TUS_UPLOAD_DIR)
+            fd, path = tempfile.mkstemp(prefix="tus-upload-", dir=settings.TUS_UPLOAD_DIR)
             os.close(fd)
             self.temporary_file_path = path
             self.save()
