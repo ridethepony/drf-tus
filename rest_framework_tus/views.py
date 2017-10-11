@@ -77,6 +77,12 @@ class TusHeadMixin(object):
         # Add upload expiry to headers
         add_expiry_header(upload, headers)
 
+        try:
+            assert upload.get_or_create_temporary_file()
+        except AssertionError:
+            del headers['Upload-Offset']
+            return Response(headers=headers, status=status.HTTP_410_GONE)
+
         return Response(headers=headers, status=status.HTTP_200_OK)
 
 
