@@ -7,7 +7,7 @@ import tempfile
 import uuid
 
 import errno
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_fsm import FSMField, transition
@@ -51,11 +51,17 @@ class AbstractUpload(models.Model):
     class Meta:
         abstract = True
 
-    def write_data(self, bytes, chunk_size):
-        write_bytes_to_file(self.temporary_file_path, self.upload_offset, bytes, makedirs=True)
+    def clean_fields(self, exclude=None):
+        super(AbstractUpload, self).clean_fields(exclude=exclude)
+        if self.upload_offset < 0:
+            raise ValidationError(_('upload_offset should be >= 0.'))
 
-        self.upload_offset += chunk_size
-        self.save()
+    def write_data(self, bytes, chunk_size):
+        num_bytes_written = write_bytes_to_file(self.temporary_file_path, self.upload_offset, bytes, makedirs=True)
+
+        if num_bytes_written > 0:
+            self.upload_offset += num_bytes_written
+            self.save()
 
     def delete(self, *args, **kwargs):
         if self.temporary_file_path and os.path.exists(self.temporary_file_path):

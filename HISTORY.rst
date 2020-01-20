@@ -3,6 +3,40 @@
 History
 -------
 
+1.21.2 (2018-09-04)
++++++++++++++++++++
+
+* Fixed Django compatibility
+
+1.21.1 (2018-08-01)
++++++++++++++++++++
+
+* Fixed failing travis build
+
+1.21 (2018-08-01)
++++++++++++++++++
+
+* Updated Django dependency and dropped support for Python 3.3.x (https://github.com/dirkmoors/drf-tus/pull/9)
+
+1.20 (2018-02-12)
++++++++++++++++++
+
+* Implemented per-view max file size setting (https://github.com/dirkmoors/drf-tus/pull/8)
+
+1.19 (2018-02-08)
++++++++++++++++++
+
+* Fixed bug that occured when pausing uploads (https://github.com/dirkmoors/drf-tus/pull/7)
+
+1.18 (2018-02-08)
++++++++++++++++++
+
+* Make the metadata 'filename' key a setting. (https://github.com/dirkmoors/drf-tus/pull/2)
+* Switch from (Positive)IntegerField to BigIntegerField for the upload_length and upload_offset fields (https://github.com/dirkmoors/drf-tus/pull/3)
+* Increase Django version support up to 1.11 (https://github.com/dirkmoors/drf-tus/pull/4)
+* Fix unicode errors (https://github.com/dirkmoors/drf-tus/pull/5)
+* Updated travis configuration
+
 1.17 (2017-05-10)
 +++++++++++++++++
 
