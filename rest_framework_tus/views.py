@@ -179,7 +179,8 @@ class TusCreateMixin(mixins.CreateModelMixin):
 class TusPatchMixin(mixins.UpdateModelMixin):
     def get_chunk(self, request):
         if TusUploadStreamParser in self.parser_classes:
-            return request.data['chunk']
+            if 'chunk' in request.data:
+                return request.data['chunk']
         return request.body
 
     def validate_chunk(self, offset, chunk_bytes):
