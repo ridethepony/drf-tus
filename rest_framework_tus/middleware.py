@@ -1,8 +1,9 @@
+from base64 import b64decode
+
 from django.http.response import HttpResponse
 from rest_framework import status
 
 from . import constants, tus_api_version
-from .compat import decode_base64
 
 
 class TusMiddleware:
@@ -122,7 +123,7 @@ class TusMiddleware:
             key, value = key_value_pair.split(' ')
 
             # Store data
-            upload_metadata[key] = decode_base64(value.encode('ascii')).decode('utf-8')
+            upload_metadata[key] = b64decode(value.encode('ascii')).decode('utf-8')
 
         # Set upload_metadata
         setattr(request, constants.UPLOAD_METADATA_FIELD_NAME, upload_metadata)

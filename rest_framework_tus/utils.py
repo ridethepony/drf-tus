@@ -2,8 +2,7 @@ import hashlib
 import os
 import sys
 import tempfile
-
-from .compat import encode_base64
+from base64 import b64encode
 
 
 def encode_base64_to_string(data):
@@ -20,7 +19,7 @@ def encode_base64_to_string(data):
         else:
             data = str(data).encode('utf-8')
 
-    return encode_base64(data).decode('ascii').rstrip('\n')
+    return b64encode(data).decode('ascii').rstrip('\n')
 
 
 def encode_upload_metadata(upload_metadata):

@@ -1,6 +1,6 @@
+from base64 import b64decode
 from unittest.case import TestCase
 
-from rest_framework_tus.compat import decode_base64
 from rest_framework_tus.utils import encode_base64_to_string, encode_upload_metadata
 
 
@@ -12,7 +12,7 @@ class UtilsTest(TestCase):
         result = encode_base64_to_string(data)
 
         # Decode
-        initial = decode_base64(result.encode('utf-8'))
+        initial = b64decode(result.encode('utf-8'))
 
         assert initial == data
 

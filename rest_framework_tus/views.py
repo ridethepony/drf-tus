@@ -2,6 +2,7 @@ import json
 import logging
 
 from django.http import Http404
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import mixins, status
@@ -16,7 +17,6 @@ from . import constants
 from . import settings as tus_settings
 from . import (signals, states, tus_api_checksum_algorithms, tus_api_extensions, tus_api_version,
                tus_api_version_supported)
-from .compat import reverse
 from .exceptions import Conflict
 from .models import get_upload_model
 from .serializers import UploadSerializer
