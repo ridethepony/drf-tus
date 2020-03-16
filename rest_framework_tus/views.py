@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import json
 import logging
 
@@ -51,7 +48,7 @@ class UploadMetadata(BaseMetadata):
         }
 
 
-class TusHeadMixin(object):
+class TusHeadMixin:
     def info(self, request, *args, **kwargs):
         # Validate tus header
         if not has_required_tus_header(request):

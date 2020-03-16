@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-
 from django.http.response import HttpResponse
 
 from rest_framework import status
@@ -10,7 +6,7 @@ from . import tus_api_version, constants
 from .compat import decode_base64
 
 
-class TusMiddleware(object):
+class TusMiddleware:
     def __init__(self, get_response=None):
         self.get_response = get_response
 

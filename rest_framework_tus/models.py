@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import collections
 import os
 import tempfile
@@ -52,7 +49,7 @@ class AbstractUpload(models.Model):
         abstract = True
 
     def clean_fields(self, exclude=None):
-        super(AbstractUpload, self).clean_fields(exclude=exclude)
+        super().clean_fields(exclude=exclude)
         if self.upload_offset < 0:
             raise ValidationError(_('upload_offset should be >= 0.'))
 
@@ -66,7 +63,7 @@ class AbstractUpload(models.Model):
     def delete(self, *args, **kwargs):
         if self.temporary_file_path and os.path.exists(self.temporary_file_path):
             os.remove(self.temporary_file_path)
-        super(AbstractUpload, self).delete(*args, **kwargs)
+        super().delete(*args, **kwargs)
 
     def generate_filename(self):
         return os.path.join('{}.bin'.format(uuid.uuid4()))
@@ -74,7 +71,7 @@ class AbstractUpload(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.filename:
             self.filename = self.generate_filename()
-        return super(AbstractUpload, self).save(
+        return super().save(
             force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
     def is_complete(self):
@@ -128,7 +125,7 @@ class Upload(AbstractUpload):
     def delete(self, *args, **kwargs):
         if self.state == states.DONE:
             self.uploaded_file.delete()
-        super(Upload, self).delete(*args, **kwargs)
+        super().delete(*args, **kwargs)
 
 
 def get_upload_model():

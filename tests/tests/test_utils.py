@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from unittest.case import TestCase
 
 from rest_framework_tus.utils import encode_upload_metadata, encode_base64_to_string

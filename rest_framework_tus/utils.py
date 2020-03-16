@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import os
 import six
 import sys
@@ -19,11 +16,11 @@ def encode_base64_to_string(data):
     :return six.binary_type:
     """
 
-    if not isinstance(data, six.binary_type):
-        if isinstance(data, six.text_type):
+    if not isinstance(data, bytes):
+        if isinstance(data, str):
             data = data.encode('utf-8')
         else:
-            data = six.text_type(data).encode('utf-8')
+            data = str(data).encode('utf-8')
 
     return encode_base64(data).decode('ascii').rstrip('\n')
 
@@ -63,7 +60,7 @@ def write_bytes_to_file(file_path, offset, bytes, makedirs=False):
     try:
         try:
             fh = open(file_path, 'r+b')
-        except IOError:
+        except OSError:
             fh = open(file_path, 'wb')
         fh.seek(offset, os.SEEK_SET)
         num_bytes_written = fh.write(bytes)

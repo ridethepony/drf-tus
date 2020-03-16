@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 TUS_RESUMABLE_FIELD_NAME = 'tus_resumable'
 
 UPLOAD_DEFER_LENGTH_FIELD_NAME = 'tus_upload_defer_length'

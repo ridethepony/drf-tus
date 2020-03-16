@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # complexity documentation build configuration file, created by
 # sphinx-quickstart on Tue Jul  9 22:26:36 2013.
@@ -46,8 +45,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'drf-tus'
-copyright = u'2017, Dirk Moors'
+project = 'drf-tus'
+copyright = '2017, Dirk Moors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -192,8 +191,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (local_file start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'drf-tus.tex', u'drf-tus Documentation',
-   u'Dirk Moors', 'manual'),
+  ('index', 'drf-tus.tex', 'drf-tus Documentation',
+   'Dirk Moors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -222,8 +221,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (local_file start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'drf-tus', u'drf-tus Documentation',
-     [u'Dirk Moors'], 1)
+    ('index', 'drf-tus', 'drf-tus Documentation',
+     ['Dirk Moors'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -236,8 +235,8 @@ man_pages = [
 # (local_file start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'drf-tus', u'drf-tus Documentation',
-   u'Dirk Moors', 'drf-tus', 'One line description of project.',
+  ('index', 'drf-tus', 'drf-tus Documentation',
+   'Dirk Moors', 'drf-tus', 'One line description of project.',
    'Miscellaneous'),
 ]
 

@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import copy
 import json
 
@@ -235,7 +232,7 @@ class ViewTests(APITestCase):
 
     def _test_upload_with_checksum(self, checksum_algorithm, checksum=None, expected_failure=None):
         # Define blob
-        blob = 'Şởოè śấოρļể ẮŞĈİĪ-ŧểхŧ'.encode('utf-8')   # Make sure the data are **BYTES**!!!!
+        blob = 'Şởოè śấოρļể ẮŞĈİĪ-ŧểхŧ'.encode()   # Make sure the data are **BYTES**!!!!
 
         # Create test data
         test_data = ('test_data.txt', blob)

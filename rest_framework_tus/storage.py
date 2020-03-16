@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from abc import ABCMeta, abstractmethod
 
 from django.core.files import File
@@ -12,7 +9,7 @@ from rest_framework_tus import signals
 from .settings import TUS_SAVE_HANDLER_CLASS
 
 
-class AbstractUploadSaveHandler(with_metaclass(ABCMeta, object)):
+class AbstractUploadSaveHandler(metaclass=ABCMeta):
     def __init__(self, upload):
         self.upload = upload
 
