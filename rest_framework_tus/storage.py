@@ -1,11 +1,10 @@
 from abc import ABCMeta, abstractmethod
 
 from django.core.files import File
-from six import with_metaclass
-
 from django.utils.module_loading import import_string
 
 from rest_framework_tus import signals
+
 from .settings import TUS_SAVE_HANDLER_CLASS
 
 

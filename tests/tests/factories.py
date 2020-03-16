@@ -1,5 +1,4 @@
 import factory
-
 from rest_framework_tus.models import get_upload_model
 
 

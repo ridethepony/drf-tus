@@ -1,4 +1,5 @@
-from django.conf.urls import url, include
+from django.conf.urls import include, url
+
 from rest_framework_tus.views import UploadViewSet
 
 from .routers import TusAPIRouter

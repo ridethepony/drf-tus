@@ -1,18 +1,17 @@
 import copy
 import json
-
 from datetime import timedelta
 
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from rest_framework_tus import settings as tus_settings, tus_api_extensions, tus_api_version_supported, tus_api_version, \
-    states
+from rest_framework_tus import settings as tus_settings
+from rest_framework_tus import states, tus_api_extensions, tus_api_version, tus_api_version_supported
 from rest_framework_tus.compat import reverse
 from rest_framework_tus.models import get_upload_model
-from rest_framework_tus.utils import encode_upload_metadata, encode_base64_to_string, \
-    read_bytes_from_field_file, create_checksum_header
+from rest_framework_tus.utils import (create_checksum_header, encode_base64_to_string, encode_upload_metadata,
+                                      read_bytes_from_field_file)
 from tests.tests.factories import UploadFactory
 
 

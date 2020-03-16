@@ -3,7 +3,7 @@ import logging
 from django.dispatch import receiver
 
 from rest_framework_tus.models import get_upload_model
-from rest_framework_tus.signals import received, saved, finished
+from rest_framework_tus.signals import finished, received, saved
 from rest_framework_tus.storage import get_save_handler
 
 logger = logging.getLogger(__name__)

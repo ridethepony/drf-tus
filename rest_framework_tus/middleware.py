@@ -1,8 +1,7 @@
 from django.http.response import HttpResponse
-
 from rest_framework import status
 
-from . import tus_api_version, constants
+from . import constants, tus_api_version
 from .compat import decode_base64
 
 

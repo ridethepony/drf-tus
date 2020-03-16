@@ -11,13 +11,16 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from rest_framework_tus.parsers import TusUploadStreamParser
-from . import tus_api_version, tus_api_version_supported, tus_api_extensions, tus_api_checksum_algorithms, \
-    settings as tus_settings, constants, signals, states
+
+from . import constants
+from . import settings as tus_settings
+from . import (signals, states, tus_api_checksum_algorithms, tus_api_extensions, tus_api_version,
+               tus_api_version_supported)
 from .compat import reverse
 from .exceptions import Conflict
 from .models import get_upload_model
 from .serializers import UploadSerializer
-from .utils import encode_upload_metadata, checksum_matches
+from .utils import checksum_matches, encode_upload_metadata
 
 logger = logging.getLogger(__name__)
 
@@ -173,6 +176,7 @@ class TusCreateMixin(mixins.CreateModelMixin):
         """
         return filename
 
+
 class TusPatchMixin(mixins.UpdateModelMixin):
     def get_chunk(self, request):
         if TusUploadStreamParser in self.parser_classes:
@@ -235,8 +239,7 @@ class TusPatchMixin(mixins.UpdateModelMixin):
             if upload_checksum[0] not in tus_api_checksum_algorithms:
                 return Response('Unsupported Checksum Algorithm: {}.'.format(
                     upload_checksum[0]), status=status.HTTP_400_BAD_REQUEST)
-            elif not checksum_matches(
-                upload_checksum[0], upload_checksum[1], chunk_bytes):
+            elif not checksum_matches(upload_checksum[0], upload_checksum[1], chunk_bytes):
                 return Response('Checksum Mismatch.', status=460)
 
         # Run chunk validator
@@ -275,6 +278,7 @@ class TusPatchMixin(mixins.UpdateModelMixin):
 
     def _is_valid_content_type(self, request):
         return request.META['CONTENT_TYPE'] == TusUploadStreamParser.media_type
+
 
 class TusTerminateMixin(mixins.DestroyModelMixin):
     def destroy(self, request, *args, **kwargs):

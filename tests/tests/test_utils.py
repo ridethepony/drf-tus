@@ -1,7 +1,7 @@
 from unittest.case import TestCase
 
-from rest_framework_tus.utils import encode_upload_metadata, encode_base64_to_string
 from rest_framework_tus.compat import decode_base64
+from rest_framework_tus.utils import encode_base64_to_string, encode_upload_metadata
 
 
 class UtilsTest(TestCase):
@@ -26,4 +26,6 @@ class UtilsTest(TestCase):
         result = encode_upload_metadata(data)
 
         # Check result
-        assert result == 'filename {},some-key {}'.format(encode_base64_to_string('bla.jpg'), encode_base64_to_string('hallo.png'))
+        assert result == 'filename {},some-key {}'.format(
+            encode_base64_to_string('bla.jpg'), encode_base64_to_string('hallo.png')
+        )

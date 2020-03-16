@@ -1,9 +1,7 @@
-import os
-import six
-import sys
-
-import tempfile
 import hashlib
+import os
+import sys
+import tempfile
 
 from .compat import encode_base64
 

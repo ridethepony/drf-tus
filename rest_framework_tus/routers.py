@@ -1,5 +1,5 @@
 import rest_framework
-from rest_framework.routers import Route, DynamicRoute, SimpleRouter
+from rest_framework.routers import DynamicRoute, Route, SimpleRouter
 
 
 def get_list_route():

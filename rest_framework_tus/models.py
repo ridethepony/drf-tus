@@ -1,18 +1,16 @@
 import collections
+import errno
 import os
 import tempfile
 import uuid
 
-import errno
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_fsm import FSMField, transition
 from jsonfield import JSONField
 
-from rest_framework_tus import signals
-from rest_framework_tus import states
-from rest_framework_tus import settings
+from rest_framework_tus import settings, signals, states
 from rest_framework_tus.utils import write_bytes_to_file
 
 
