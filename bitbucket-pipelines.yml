@@ -2,12 +2,6 @@ pipelines:
   default:
     - parallel:
         - step:
-            name: Python 3.5
-            image: python:3.5-slim
-            script:
-              - pip install -U tox
-              - tox --skip-missing-interpreters true
-        - step:
             name: Python 3.6
             image: python:3.6-slim
             script:
