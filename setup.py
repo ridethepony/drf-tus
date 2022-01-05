@@ -56,7 +56,7 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'Django>=2.2.11',
+        'Django>=2.2.11,<4',
         'djangorestframework>=3.11.0',
         'jsonfield>=2.0.0',
         'django-fsm==2.7.0'
