@@ -1,8 +1,39 @@
 pipelines:
   default:
-    - step:
-        name: Test
-        image: python:3.8
-        script:
-          - pip install -U tox
-          - tox --skip-missing-interpreters true
+    - parallel:
+        - step:
+            name: Python 3.5
+            image: python:3.5
+            script:
+              - pip install -U tox
+              - tox --skip-missing-interpreters true
+        - step:
+            name: Python 3.6
+            image: python:3.6
+            script:
+              - pip install -U tox
+              - tox --skip-missing-interpreters true
+        - step:
+            name: Python 3.7
+            image: python:3.7
+            script:
+              - pip install -U tox
+              - tox --skip-missing-interpreters true
+        - step:
+            name: Python 3.8
+            image: python:3.8
+            script:
+              - pip install -U tox
+              - tox --skip-missing-interpreters true
+        - step:
+            name: Python 3.9
+            image: python:3.9
+            script:
+              - pip install -U tox
+              - tox --skip-missing-interpreters true
+        - step:
+            name: Python 3.10
+            image: python:3.10
+            script:
+              - pip install -U tox
+              - tox --skip-missing-interpreters true
