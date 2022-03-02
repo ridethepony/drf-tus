@@ -1,6 +1,5 @@
-default_app_config = 'rest_framework_tus.apps.RestFrameworkTusConfig'
 
-__version__ = '1.21.3dev'
+__version__ = '1.21.4dev'
 
 tus_api_version = '1.0.0'
 tus_api_version_supported = ['1.0.0']
