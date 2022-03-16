@@ -1,7 +1,7 @@
 from django.dispatch import Signal
 
-receiving = Signal()
-received = Signal()
-saving = Signal()
-saved = Signal()
-finished = Signal()
+receiving = Signal(providing_args=['instance'])
+received = Signal(providing_args=['instance'])
+saving = Signal(providing_args=['instance'])
+saved = Signal(providing_args=['instance'])
+finished = Signal(providing_args=['instance'])
