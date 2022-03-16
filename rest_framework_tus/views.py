@@ -117,11 +117,17 @@ class TusCreateMixin(mixins.CreateModelMixin):
         filename = self.validate_filename(filename)
 
         # Retrieve serializer
-        serializer = self.get_serializer(data={
-            'upload_length': upload_length,
-            'upload_metadata': json.dumps(upload_metadata),
-            'filename': filename,
-        })
+        if upload_length is None:
+            serializer = self.get_serializer(data={
+                'upload_metadata': json.dumps(upload_metadata),
+                'filename': filename,
+            })
+        else:
+            serializer = self.get_serializer(data={
+                'upload_length': upload_length,
+                'upload_metadata': json.dumps(upload_metadata),
+                'filename': filename,
+            })
 
         # Validate serializer
         serializer.is_valid(raise_exception=True)
