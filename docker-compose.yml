@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+
+  python:
+    image: python:drftus
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile.python'
+    restart: unless-stopped
+    volumes:
+      - '.:/code'
+    stdin_open: true
+    tty: true
