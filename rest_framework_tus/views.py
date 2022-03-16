@@ -147,7 +147,7 @@ class TusCreateMixin(mixins.CreateModelMixin):
         headers = self.validate_success_headers(headers)
 
         # Upload length is zero bytes, so PATCH will not be called.
-        # Do the needed stuff here:
+        # We need to create the file and send the signal here.
         if upload_length == 0:
             assert upload.get_or_create_temporary_file()
             upload.start_receiving()
