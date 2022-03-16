@@ -146,6 +146,14 @@ class TusCreateMixin(mixins.CreateModelMixin):
         # Validate headers
         headers = self.validate_success_headers(headers)
 
+        # Upload length is zero bytes, so PATCH will not be called.
+        # Do the needed stuff here:
+        if upload_length == 0:
+            assert upload.get_or_create_temporary_file()
+            upload.start_receiving()
+            upload.save()
+            signals.received.send(sender=upload.__class__, instance=upload)
+
         # By default, don't include a response body
         if not tus_settings.TUS_RESPONSE_BODY_ENABLED:
             return Response(headers=headers, status=status.HTTP_201_CREATED)
