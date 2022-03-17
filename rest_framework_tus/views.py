@@ -102,10 +102,9 @@ class TusCreateMixin(mixins.CreateModelMixin):
             # If upload_length is not given, we expect the defer header!
             if getattr(request, constants.UPLOAD_DEFER_LENGTH_FIELD_NAME, -1) != 1:
                 return Response('Missing "{Upload-Defer-Length}" header.', status=status.HTTP_400_BAD_REQUEST)
-        else:
-            if upload_length > max_file_size:
-                return Response('Invalid "Upload-Length". Maximum value: {}.'.format(tus_settings.TUS_MAX_FILE_SIZE),
-                                status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+        elif upload_length > max_file_size:
+            return Response('Invalid "Upload-Length". Maximum value: {}.'.format(tus_settings.TUS_MAX_FILE_SIZE),
+                            status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
         # Get metadata from request
         upload_metadata = getattr(request, constants.UPLOAD_METADATA_FIELD_NAME, {})
