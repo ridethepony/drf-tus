@@ -93,18 +93,18 @@ class TusCreateMixin(mixins.CreateModelMixin):
             return Response('Missing "{}" header.'.format('Tus-Resumable'), status=status.HTTP_400_BAD_REQUEST)
 
         # Get file size from request
-        upload_length = getattr(request, constants.UPLOAD_LENGTH_FIELD_NAME, -1)
+        upload_length = getattr(request, constants.UPLOAD_LENGTH_FIELD_NAME, None)
 
         # Validate upload_length
         max_file_size = getattr(self, 'max_file_size', tus_settings.TUS_MAX_FILE_SIZE)
-        if upload_length > max_file_size:
-            return Response('Invalid "Upload-Length". Maximum value: {}.'.format(max_file_size),
-                            status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
-        # If upload_length is not given, we expect the defer header!
-        if not upload_length or upload_length < 0:
+        if upload_length is None:  # We want to allow 0
+            # If upload_length is not given, we expect the defer header!
             if getattr(request, constants.UPLOAD_DEFER_LENGTH_FIELD_NAME, -1) != 1:
                 return Response('Missing "{Upload-Defer-Length}" header.', status=status.HTTP_400_BAD_REQUEST)
+        elif upload_length > max_file_size:
+            return Response('Invalid "Upload-Length". Maximum value: {}.'.format(tus_settings.TUS_MAX_FILE_SIZE),
+                            status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
         # Get metadata from request
         upload_metadata = getattr(request, constants.UPLOAD_METADATA_FIELD_NAME, {})
@@ -116,11 +116,17 @@ class TusCreateMixin(mixins.CreateModelMixin):
         filename = self.validate_filename(filename)
 
         # Retrieve serializer
-        serializer = self.get_serializer(data={
-            'upload_length': upload_length,
-            'upload_metadata': json.dumps(upload_metadata),
-            'filename': filename,
-        })
+        if upload_length is None:
+            serializer = self.get_serializer(data={
+                'upload_metadata': json.dumps(upload_metadata),
+                'filename': filename,
+            })
+        else:
+            serializer = self.get_serializer(data={
+                'upload_length': upload_length,
+                'upload_metadata': json.dumps(upload_metadata),
+                'filename': filename,
+            })
 
         # Validate serializer
         serializer.is_valid(raise_exception=True)
@@ -144,6 +150,14 @@ class TusCreateMixin(mixins.CreateModelMixin):
 
         # Validate headers
         headers = self.validate_success_headers(headers)
+
+        # Upload length is zero bytes, so PATCH will not be called.
+        # We need to create the file and send the signal here.
+        if upload_length == 0:
+            assert upload.get_or_create_temporary_file()
+            upload.start_receiving()
+            upload.save()
+            signals.received.send(sender=upload.__class__, instance=upload)
 
         # By default, don't include a response body
         if not tus_settings.TUS_RESPONSE_BODY_ENABLED:

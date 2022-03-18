@@ -33,7 +33,7 @@ class AbstractUpload(models.Model):
     state = FSMField(default=states.INITIAL)
 
     upload_offset = models.BigIntegerField(default=0)
-    upload_length = models.BigIntegerField(default=-1)
+    upload_length = models.BigIntegerField(default=0)
 
     upload_metadata = JSONField(load_kwargs={'object_pairs_hook': collections.OrderedDict})
 

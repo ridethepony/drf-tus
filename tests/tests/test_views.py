@@ -87,6 +87,22 @@ class ViewTests(APITestCase):
         # Check status
         assert result.status_code == status.HTTP_400_BAD_REQUEST
 
+    def test_create_zero_byte_file(self):
+        # Prepare creation headers
+        headers = {
+            'Tus-Resumable': tus_api_version,
+            'Upload-Length': 0,
+            'Upload-Metadata': encode_upload_metadata({
+                'filename': 'test_file.jpg'
+            })
+        }
+
+        # Perform request
+        result = self.client.post(reverse('rest_framework_tus:api:upload-list'), headers=headers)
+
+        # Check status
+        assert result.status_code == status.HTTP_201_CREATED
+
     def test_create_without_length_with_defer(self):
         # Prepare creation headers
         headers = {
@@ -108,7 +124,7 @@ class ViewTests(APITestCase):
         upload = get_upload_model().objects.all().first()
 
         # Validate upload
-        assert upload.upload_length == -1
+        assert upload.upload_length == 0
         assert upload.filename == 'test_file_٩(-̮̮̃-̃)۶ ٩(●̮̮̃•̃)۶ ٩(͡๏̯͡๏)۶ ٩(-̮̮̃•̃).jpg'
 
         # Validate response headers
