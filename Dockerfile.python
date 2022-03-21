@@ -1,0 +1,46 @@
+# syntax=docker/dockerfile:1.2
+
+ARG PYTHON_VERSION=3.8
+ARG DOCKERIZE_VERSION=v0.6.1
+ARG DOCKERIZE_CHECKSUM=5c1b3d9a7d9341e23e0b8bdf2a288387
+ARG WATCHMAN_VERSION=v2021.07.20.00
+
+# Fetch and extract dockerize
+FROM python:$PYTHON_VERSION AS dockerize
+ARG DOCKERIZE_VERSION
+ARG DOCKERIZE_CHECKSUM
+RUN wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+RUN echo $DOCKERIZE_CHECKSUM dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | md5sum -c
+RUN tar -C /tmp -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+RUN rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+# Done
+
+# Fetch and extract watchman
+FROM python:$PYTHON_VERSION AS watchman
+ARG WATCHMAN_VERSION
+RUN wget -q https://github.com/facebook/watchman/releases/download/$WATCHMAN_VERSION/watchman-$WATCHMAN_VERSION-linux.zip
+RUN unzip -d /tmp watchman-$WATCHMAN_VERSION-linux.zip
+RUN rm watchman-$WATCHMAN_VERSION-linux.zip
+# Done
+
+# Create the project image
+FROM python:$PYTHON_VERSION
+
+ARG WATCHMAN_VERSION
+ENV PYTHONUNBUFFERED 1
+ENV DJANGO_WATCHMAN_TIMEOUT 30
+
+# Get the dockerize and watchman binaries from the previous stages
+RUN mkdir -p /usr/local/{bin,lib} /usr/local/var/run/watchman
+COPY --from=dockerize /tmp/dockerize /usr/local/bin
+COPY --from=watchman /tmp/watchman-$WATCHMAN_VERSION-linux/bin/* /usr/local/bin
+COPY --from=watchman /tmp/watchman-$WATCHMAN_VERSION-linux/lib/* /usr/local/lib
+RUN chmod 755 /usr/local/bin/watchman
+RUN chmod 2777 /usr/local/var/run/watchman
+
+# Create the project layout and install the dependencies
+RUN mkdir /code
+WORKDIR /code
+COPY requirements.txt requirements_dev.txt requirements_test.txt ./
+RUN --mount=type=cache,target=/root/.cache/pip,id=pip pip install -U pip
+RUN --mount=type=cache,target=/root/.cache/pip,id=pip pip install -r requirements_dev.txt -r requirements.txt -r requirements_test.txt
