@@ -59,7 +59,7 @@ setup(
         'Django>=2.2.11,<4',
         'djangorestframework>=3.11.0',
         'jsonfield>=2.0.0',
-        'django-fsm==2.7.0'
+        'django-fsm==2.7.1'
     ],
     license="MIT",
     zip_safe=False,

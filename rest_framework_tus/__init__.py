@@ -1,4 +1,7 @@
-default_app_config = 'rest_framework_tus.apps.RestFrameworkTusConfig'
+import django
+
+if django.VERSION < (3, 2):
+    default_app_config = 'rest_framework_tus.apps.RestFrameworkTusConfig'
 
 __version__ = '1.21.3dev'
 
