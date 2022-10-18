@@ -1,4 +1,4 @@
-from django.urls import include, re_path
+from django.urls import include, path
 
 from rest_framework_tus.views import UploadViewSet
 
@@ -8,5 +8,5 @@ router = TusAPIRouter()
 router.register(r'files', UploadViewSet, basename='upload')
 
 urlpatterns = [
-    re_path(r'', include((router.urls, 'rest_framework_tus'), namespace='api'))
+    path('', include((router.urls, 'rest_framework_tus'), namespace='api'))
 ]
