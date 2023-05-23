@@ -56,7 +56,7 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'Django>=2.2.11,<4',
+        'Django>=3.2.1',
         'djangorestframework>=3.11.0',
         'jsonfield>=2.0.0',
         'django-fsm==2.7.1'
@@ -67,13 +67,11 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Django',
-        'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
