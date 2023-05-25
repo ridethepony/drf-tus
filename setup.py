@@ -6,10 +6,12 @@ import sys
 from pathlib import Path
 from setuptools import setup
 
+REPO_DIR = Path(__file__).parent
+
 
 def get_version(file_path):
     """Retrieves the version from file_path within this repo"""
-    filename = Path(__file__).parent / file_path
+    filename = REPO_DIR / file_path
     version_file = filename.read_text()
     version_match = re.search(r'^__version__ = "([^"]+)"', version_file, re.M)
     if version_match:
@@ -36,14 +38,14 @@ if sys.argv[-1] == "tag":
     os.system("git push --tags")
     sys.exit()
 
-readme = open("README.md").read()
-history = open("HISTORY.rst").read().replace(".. :changelog:", "")
+readme = (REPO_DIR / "README.md").read_text()
+history = (REPO_DIR / "HISTORY.md").read_text()
 
 setup(
     name="leukeleu-drf-tus",
     version=version,
     description="""A Tus (tus.io) library for Django Rest Framework""",
-    long_description=f"{readme}\n\n{history}",
+    long_description=f"{readme}\n{history}",
     author="Leukeleu",
     author_email="info@leukeleu.nl",
     url="https://github.com/leukeleu/leukeleu-drf-tus",

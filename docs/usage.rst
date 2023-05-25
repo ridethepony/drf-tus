@@ -12,7 +12,7 @@ To use drf-tus in a project, add it to your `INSTALLED_APPS`:
         ...
     )
 
-Add the middleware to `MIDDLEWARE` (or `MIDDLEWARE_CLASSES` for Django < 1.10)
+Add the middleware to `MIDDLEWARE`
 
 .. code-block:: python
 

@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to drf-tus's documentation!
+Welcome to leukeleu-drf-tus's documentation!
 =================================================================
 
 Contents:
@@ -15,5 +15,4 @@ Contents:
    installation
    usage
    contributing
-   authors
    history
