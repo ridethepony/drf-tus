@@ -1,5 +1,5 @@
 bumpversion~=0.5.3
-coverage~=4.3.4
+coverage~=7.2
 factory_boy~=3.2
 flake8~=6.0
 wheel~=0.29.0
