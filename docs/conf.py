@@ -47,8 +47,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'drf-tus'
-copyright = '2017, Dirk Moors'
+project = 'leukeleu-drf-tus'
+copyright = '2023, Leukeleu; 2017, Dirk Moors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
