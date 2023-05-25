@@ -1,7 +1,7 @@
 leukeleu-drf-tus
 ================
 
-A Tus (tus.io) library for Django Rest Framework
+A [tus](https://tus.io) library for [Django REST Framework](https://www.django-rest-framework.org).
 
 
 Quickstart
@@ -9,7 +9,7 @@ Quickstart
 
 Install drf-tus:
 
-    pip install drf-tus
+    pip install leukeleu-drf-tus
 
 Add it to your `INSTALLED_APPS`:
 
@@ -53,4 +53,4 @@ Running Tests
 
 Does the code actually work?
 
-    docker compose exec make coveragetest
+    docker compose exec python make coveragetest
