@@ -3,6 +3,12 @@
 History
 -------
 
+2.0.0.dev0 (2023-05-25)
++++++++++++++++++++
+
+* Renamed package to leukeleu-drf-tus
+* Major refactoring
+
 1.21.2 (2018-09-04)
 +++++++++++++++++++
 

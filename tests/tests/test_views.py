@@ -10,8 +10,8 @@ from rest_framework.test import APITestCase
 from rest_framework_tus import settings as tus_settings
 from rest_framework_tus import states, tus_api_extensions, tus_api_version, tus_api_version_supported
 from rest_framework_tus.models import get_upload_model
-from rest_framework_tus.utils import (create_checksum_header, encode_base64_to_string, encode_upload_metadata,
-                                      read_bytes_from_field_file)
+from rest_framework_tus.utils import (
+    create_checksum_header, encode_base64_to_string, encode_upload_metadata, read_bytes_from_field_file)
 from tests.tests.factories import UploadFactory
 
 
@@ -24,7 +24,7 @@ class ViewTests(APITestCase):
         assert result.status_code == status.HTTP_200_OK
 
         # Validate response headers
-        assert 'Tus-Resumable' in result
+        self.assertIn('Tus-Resumable', result)
 
         expected = {
             'Tus-Resumable': tus_api_version,
@@ -293,7 +293,7 @@ class ViewTests(APITestCase):
                 return
 
             # Check result
-            assert result.status_code == status.HTTP_204_NO_CONTENT
+            self.assertEqual(result.status_code, status.HTTP_204_NO_CONTENT)
 
             # Update data
             data = data[chunk_size:]

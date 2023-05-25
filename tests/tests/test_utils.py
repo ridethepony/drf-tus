@@ -19,7 +19,7 @@ class UtilsTest(TestCase):
     def test_encode_upload_metadata(self):
         data = {
             'filename': 'bla.jpg',
-            'some-key': 'hallo.png'
+            'some-key': 'hallo.png',
         }
 
         # Encode!

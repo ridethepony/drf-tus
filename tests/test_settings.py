@@ -1,7 +1,5 @@
 import os
 
-import django
-
 DEBUG = True
 USE_TZ = True
 
@@ -30,11 +28,6 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-if django.VERSION >= (1, 10):
-    MIDDLEWARE = (
-        'rest_framework_tus.middleware.TusMiddleware',
-    )
-else:
-    MIDDLEWARE_CLASSES = (
-        'rest_framework_tus.middleware.TusMiddleware',
-    )
+MIDDLEWARE = (
+    'rest_framework_tus.middleware.TusMiddleware',
+)

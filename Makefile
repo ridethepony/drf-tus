@@ -1,47 +1,45 @@
-.PHONY: clean-pyc clean-build docs help
 .DEFAULT_GOAL := help
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
-try:
-	from urllib import pathname2url
-except:
-	from urllib.request import pathname2url
-
+from urllib.request import pathname2url
 webbrowser.open("file://" + pathname2url(os.path.abspath(sys.argv[1])))
 endef
 export BROWSER_PYSCRIPT
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
-help:
-	@perl -nle'print $& if m{^[a-zA-Z_-]+:.*?## .*$$}' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
-
 clean: clean-build clean-pyc
 
+.PHONY: clean-build
 clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr *.egg-info
 
+.PHONY: clean-pyc
 clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 
-lint: ## check style with flake8
-	flake8 rest_framework_tus tests
+.PHONY: flaketest
+flaketest:
+	flake8
 
-test: ## run tests quickly with the default Python
-	python runtests.py tests
+.PHONY: coveragetest
+coveragetest:
+	coverage run -m unittest --catch tests
 
-test-all: ## run tests on every Python version with tox
-	tox
-
-coverage: ## check code coverage quickly with the default Python
-	coverage run --source rest_framework_tus runtests.py tests
-	coverage report -m
+.PHONY: coverage
+coverage: coveragetest
 	coverage html
-	open htmlcov/index.html
+	@echo "Coverage report is located at ./var/htmlcov/index.html"
 
+.PHONY: migrationtest
+migrationtest:
+	# Check if there are any model changes without migrations
+	./manage.py makemigrations --dry-run --no-input --check --settings tests.test_settings
+
+.PHONY: docs
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/drf-tus.rst
 	rm -f docs/modules.rst
@@ -57,3 +55,11 @@ release: clean ## package and upload a release
 sdist: clean ## package
 	python setup.py sdist
 	ls -l dist
+
+##
+# These targets are to be used by GitHub actions
+##
+
+.PHONY: install-pipeline
+install-pipeline:
+	pip install . -r requirements_local.txt
