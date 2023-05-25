@@ -55,7 +55,7 @@ class TusHeadMixin:
     def info(self, request, *args, **kwargs):
         # Validate tus header
         if not has_required_tus_header(request):
-            return Response('Missing "{}" header.'.format('Tus-Resumable'), status=status.HTTP_400_BAD_REQUEST)
+            return Response('Missing "Tus-Resumable" header.', status=status.HTTP_400_BAD_REQUEST)
 
         try:
             upload = self.get_object()
@@ -90,7 +90,7 @@ class TusCreateMixin(mixins.CreateModelMixin):
     def create(self, request, *args, **kwargs):
         # Validate tus header
         if not has_required_tus_header(request):
-            return Response('Missing "{}" header.'.format('Tus-Resumable'), status=status.HTTP_400_BAD_REQUEST)
+            return Response('Missing "Tus-Resumable" header.', status=status.HTTP_400_BAD_REQUEST)
 
         # Get file size from request
         upload_length = getattr(request, constants.UPLOAD_LENGTH_FIELD_NAME, None)
@@ -215,7 +215,7 @@ class TusPatchMixin(mixins.UpdateModelMixin):
     def partial_update(self, request, *args, **kwargs):
         # Validate tus header
         if not has_required_tus_header(request):
-            return Response('Missing "{}" header.'.format('Tus-Resumable'), status=status.HTTP_400_BAD_REQUEST)
+            return Response('Missing "Tus-Resumable" header.', status=status.HTTP_400_BAD_REQUEST)
 
         # Validate content type
         if not self._is_valid_content_type(request):
@@ -251,8 +251,10 @@ class TusPatchMixin(mixins.UpdateModelMixin):
         upload_checksum = getattr(request, constants.UPLOAD_CHECKSUM_FIELD_NAME, None)
         if upload_checksum is not None:
             if upload_checksum[0] not in tus_api_checksum_algorithms:
-                return Response('Unsupported Checksum Algorithm: {}.'.format(
-                    upload_checksum[0]), status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    f'Unsupported Checksum Algorithm: {upload_checksum[0]}.',
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
             elif not checksum_matches(upload_checksum[0], upload_checksum[1], chunk_bytes):
                 return Response('Checksum Mismatch.', status=460)
 
