@@ -1,5 +1,9 @@
 # History
 
+## 2.0.0 (2023-05-31)
+
+* Release to PyPi
+
 ## 2.0.0.dev0 (2023-05-25)
 
 * Renamed package to leukeleu-drf-tus
