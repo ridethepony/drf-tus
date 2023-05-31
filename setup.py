@@ -46,6 +46,7 @@ setup(
     version=version,
     description="""A Tus (tus.io) library for Django Rest Framework""",
     long_description=f"{readme}\n{history}",
+    long_description_content_type = "text/markdown",
     author="Leukeleu",
     author_email="info@leukeleu.nl",
     url="https://github.com/leukeleu/leukeleu-drf-tus",
